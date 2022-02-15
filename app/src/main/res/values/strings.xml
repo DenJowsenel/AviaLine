@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">AviaLine</string>
+    <string name="Authorization">Авторизация</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Логин</string>
+    <string name="profilename">Имя профиля</string>
+    <string name="userName">Имя пользователя</string>
+    <string name="applyChange">Применить</string>
+    <string name="Email">E-mail</string>
+    <string name="Profile">Профиль</string>
+    <string name="Confirm_password">Повторить пароль</string>
+    <string name="Registration">Регистрация</string>
+    <string name="Password">Пароль</string>
+    <string name="Name_user">Имя пользователя</string>
 </resources>
