@@ -10,10 +10,10 @@ import com.DenJowsenel.avialine.model.Route
 
 typealias OnRouteClickListener = (Route) -> Unit
 
-class RoutesAdapter (
+class RouteAdapter (
     private val routes : List<Route>,
     private val listener : OnRouteClickListener,
-) : RecyclerView.Adapter<RoutesAdapter.RouteVH>() {
+) : RecyclerView.Adapter<RouteAdapter.RouteVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteVH {
         val layoutInflater = LayoutInflater.from(parent.context)
