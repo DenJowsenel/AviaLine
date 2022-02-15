@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.DenJowsenel.avialine.R
 import com.DenJowsenel.avialine.model.Company
+import com.bumptech.glide.Glide
 
 typealias OnCompanyClickListener = (Company) -> Unit
 
@@ -48,7 +49,12 @@ class CompanyAdapter (
             this.company = company
             company_NAME.text = company.company_name
             company_DESC.text = company.company_desc
-            company_IMG.setImageResource(company.company_img)
+            Glide
+                .with(itemView)
+                .load(company.imageCompanyURL)
+                .centerCrop()
+                .placeholder(R.drawable.ic_search)
+                .into(company_IMG)
         }
     }
 }
