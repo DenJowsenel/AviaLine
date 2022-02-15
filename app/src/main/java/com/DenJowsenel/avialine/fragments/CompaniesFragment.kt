@@ -1,76 +1,94 @@
 package com.DenJowsenel.avialine.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.DenJowsenel.avialine.MainActivity
-import com.DenJowsenel.avialine.R
+import com.DenJowsenel.avialine.*
 import com.DenJowsenel.avialine.adapter.CompanyAdapter
 import com.DenJowsenel.avialine.databinding.FragmentCompaniesBinding
+import com.DenJowsenel.avialine.model.Company
 import com.DenJowsenel.avialine.network.NetworkService
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
 class CompaniesFragment : Fragment(R.layout.fragment_companies) {
     private lateinit var binding: FragmentCompaniesBinding
-    private val coroutineExceptionHandler = CoroutineExceptionHandler{ context,exception ->
-        exception.printStackTrace()
-        binding.progressBar.visibility = GONE
-        binding.rvCompany.adapter =
-            CompanyAdapter(listOf()) {}
-        binding.RefreshCompanies.isRefreshing = false
-        Snackbar.make(
-            requireView(),
-            getString(R.string.error),
-            Snackbar.LENGTH_SHORT
-        ).setBackgroundTint(Color.parseColor("#ED4337"))
-            .setActionTextColor(Color.parseColor("#FFFFFF"))
-            .show()
-    }
-    private val scope =
-        CoroutineScope(Dispatchers.Main + SupervisorJob() + coroutineExceptionHandler)
 
-    companion object{
+    companion object {
         fun newInstance() = CompaniesFragment()
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCompaniesBinding.bind(view)
-        binding.icClose.setOnClickListener {
-            (activity as MainActivity).navigateToFragment(RegistrationFragment.newInstance())
-        }
+
+    private fun setLoading(isLoading: Boolean) = with(binding) {
+        progressBar.isVisible = isLoading && !rvCompany.isVisible
+        RefreshCompanies.isRefreshing = isLoading && rvCompany.isVisible
+    }
+
+    private fun setData(companies: List<Company>?) = with(binding) {
+        rvCompany.isVisible = companies != null
+        binding.rvCompany.layoutManager = LinearLayoutManager(context)
+        binding.rvCompany.adapter =
+            CompanyAdapter(companies ?: listOf()) {
+                (activity as MainActivity).navigateToFragment(
+                    RoutesFragment.newInstance()
+                )
+            }
         binding.icProfile.setOnClickListener {
             (activity as MainActivity).navigateToFragment(ProfileFragment.newInstance())
         }
-
-        loadCompanies()
-
-        binding.RefreshCompanies.setOnRefreshListener {
-            binding.RefreshCompanies.isRefreshing = true
-            loadCompanies()
-            binding.RefreshCompanies.isRefreshing = false
+        binding.icClose.setOnClickListener {
+            (activity as MainActivity).navigateToFragment(RegistrationFragment.newInstance())
         }
+    }
+
+    private fun setError(message: String?) = with(binding) {
+        ErrLayout.isVisible = message != null
+        textError.text = message
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCompaniesBinding.bind(view)
+        merge(
+            flowOf(Unit),
+            binding.RefreshCompanies.onRefreshFlow(),
+            binding.buttonError.onClickFlow()
+        )
+            .flatMapLatest { loadCompanies() }
+            .distinctUntilChanged()
+            .onEach {
+                when (it) {
+                    is ScreenState.DataLoaded -> {
+                        setLoading(false)
+                        setError(null)
+                        setData(it.companies)
+                    }
+                    is ScreenState.Error -> {
+                        setLoading(false)
+                        setError(it.error)
+                        setData(null)
+                    }
+                    ScreenState.Loading -> {
+                        setLoading(true)
+                        setError(null)
+                    }
+                }
+            }
+            .launchIn(lifecycleScope)
+
     }
 
     @ExperimentalSerializationApi
-    private fun loadCompanies() {
-        scope.launch {
-            val companies = NetworkService.loadCompanies()
-            binding.rvCompany.layoutManager = LinearLayoutManager(context)
-            binding.rvCompany.adapter =
-                CompanyAdapter(companies) {
-                    (activity as MainActivity).navigateToFragment(
-                        RoutesFragment.newInstance())
-                }
-            binding.progressBar.visibility = GONE
-            binding.RefreshCompanies.isRefreshing = false
-        }
+    private fun loadCompanies() = flow {
+        emit(ScreenState.Loading)
+        val companies = NetworkService.loadCompanies()
+        emit(ScreenState.DataLoaded(companies))
     }
+        .catch {
+            emit(ScreenState.Error(getString(R.string.error)))
+        }
 }
-
 

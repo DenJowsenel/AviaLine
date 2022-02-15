@@ -31,4 +31,5 @@
     <string name="PriceTicket">Цена билета:</string>
     <string name="road"><![CDATA[Москва -> Питер]]></string>
     <string name="error">ОШИБКА =(</string>
+    <string name="refresh">Перезагрузить</string>
 </resources>
