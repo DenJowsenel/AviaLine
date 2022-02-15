@@ -13,4 +13,21 @@
     <string name="Registration">Регистрация</string>
     <string name="Password">Пароль</string>
     <string name="Name_user">Имя пользователя</string>
+    <string name="Review">Отзыв:</string>
+    <string name="star10">|10</string>
+    <string name="x">X</string>
+    <string name="reviews">Мнение клиентов</string>
+    <string name="company_name">Company name</string>
+    <string name="company">Компании</string>
+    <string name="Search">Поиск</string>
+    <string name="routs">Пути перелёта</string>
+    <string name="vip_place">VIP места:</string>
+    <string name="_10">10</string>
+    <string name="_59430">59430р</string>
+    <string name="_40">40</string>
+    <string name="vip_price">Vip цена:</string>
+    <string name="_19430">19430р</string>
+    <string name="countPlace">Кол-во мест:</string>
+    <string name="PriceTicket">Цена билета:</string>
+    <string name="road"><![CDATA[Москва -> Питер]]></string>
 </resources>
