@@ -1,4 +1,4 @@
-package com.DenJowsenel.avialine.adapter
+package com.DenJowsenel.avialine.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.DenJowsenel.avialine.R
-import com.DenJowsenel.avialine.model.Route
+import com.DenJowsenel.avialine.domain.model.Route
 
 typealias OnRouteClickListener = (Route) -> Unit
 

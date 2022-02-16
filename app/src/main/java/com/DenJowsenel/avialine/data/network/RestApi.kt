@@ -1,8 +1,8 @@
-package com.DenJowsenel.avialine.network
+package com.DenJowsenel.avialine.data.network
 
-import com.DenJowsenel.avialine.model.Company
-import com.DenJowsenel.avialine.model.Review
-import com.DenJowsenel.avialine.model.Route
+import com.DenJowsenel.avialine.domain.model.Company
+import com.DenJowsenel.avialine.domain.model.Review
+import com.DenJowsenel.avialine.domain.model.Route
 import retrofit2.http.GET
 
 interface RestApi {
