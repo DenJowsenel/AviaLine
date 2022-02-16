@@ -1,15 +1,15 @@
-package com.DenJowsenel.avialine.fragments
+package com.DenJowsenel.avialine.presentation.fragments
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.DenJowsenel.avialine.MainActivity
+import com.DenJowsenel.avialine.presentation.MainActivity
 import com.DenJowsenel.avialine.R
-import com.DenJowsenel.avialine.adapter.ReviewAdapter
+import com.DenJowsenel.avialine.presentation.adapter.ReviewAdapter
 import com.DenJowsenel.avialine.databinding.FragmentReviewsBinding
-import com.DenJowsenel.avialine.network.NetworkService
+import com.DenJowsenel.avialine.data.network.NetworkService
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import kotlinx.serialization.ExperimentalSerializationApi

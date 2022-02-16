@@ -1,4 +1,4 @@
-package com.DenJowsenel.avialine.fragments
+package com.DenJowsenel.avialine.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.DenJowsenel.avialine.*
-import com.DenJowsenel.avialine.adapter.CompanyAdapter
+import com.DenJowsenel.avialine.presentation.adapter.CompanyAdapter
 import com.DenJowsenel.avialine.databinding.FragmentCompaniesBinding
-import com.DenJowsenel.avialine.model.Company
-import com.DenJowsenel.avialine.network.NetworkService
+import com.DenJowsenel.avialine.domain.model.Company
+import com.DenJowsenel.avialine.data.network.NetworkService
+import com.DenJowsenel.avialine.presentation.MainActivity
+import com.DenJowsenel.avialine.presentation.ScreenState
+import com.DenJowsenel.avialine.presentation.viewmodel.CompaniesViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -49,6 +52,8 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         textError.text = message
     }
 
+    private val companiesViewModel by lazy { CompaniesViewModel(requireContext(), lifecycleScope) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCompaniesBinding.bind(view)
@@ -59,6 +64,7 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
         )
             .flatMapLatest { loadCompanies() }
             .distinctUntilChanged()
+        companiesViewModel.screenState
             .onEach {
                 when (it) {
                     is ScreenState.DataLoaded -> {
@@ -78,7 +84,15 @@ class CompaniesFragment : Fragment(R.layout.fragment_companies) {
                 }
             }
             .launchIn(lifecycleScope)
-
+        if(savedInstanceState == null){
+            companiesViewModel.loadData()
+        }
+        binding.RefreshCompanies.setOnRefreshListener {
+            companiesViewModel.loadData()
+        }
+        binding.buttonError.setOnClickListener {
+            companiesViewModel.loadData()
+        }
     }
 
     @ExperimentalSerializationApi

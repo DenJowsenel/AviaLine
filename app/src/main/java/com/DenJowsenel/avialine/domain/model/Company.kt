@@ -1,4 +1,4 @@
-package com.DenJowsenel.avialine.model
+package com.DenJowsenel.avialine.domain.model
 
 import kotlinx.serialization.Serializable
 

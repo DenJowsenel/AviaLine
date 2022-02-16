@@ -1,9 +1,9 @@
-package com.DenJowsenel.avialine.fragments
+package com.DenJowsenel.avialine.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.DenJowsenel.avialine.MainActivity
+import com.DenJowsenel.avialine.presentation.MainActivity
 import com.DenJowsenel.avialine.R
 import com.DenJowsenel.avialine.databinding.FragmentRegistrationBinding
 

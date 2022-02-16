@@ -1,20 +1,20 @@
-package com.DenJowsenel.avialine.fragments
+package com.DenJowsenel.avialine.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.DenJowsenel.avialine.MainActivity
+import com.DenJowsenel.avialine.presentation.MainActivity
 import com.DenJowsenel.avialine.R
-import com.DenJowsenel.avialine.databinding.FragmentSplashBinding
+import com.DenJowsenel.avialine.databinding.FragmentLoginBinding
 
-class SplashFragment : Fragment(R.layout.fragment_splash) {
+class LoginFragment : Fragment(R.layout.fragment_login) {
     companion object{
-        fun newInstance() = SplashFragment()
+        fun newInstance() = LoginFragment()
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentSplashBinding.bind(view)
-        binding.name.setOnClickListener{
+        val binding = FragmentLoginBinding.bind(view)
+        binding.button.setOnClickListener{
             (activity as MainActivity).navigateToFragment(CompaniesFragment.newInstance())
         }
     }

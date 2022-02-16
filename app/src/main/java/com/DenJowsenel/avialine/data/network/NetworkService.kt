@@ -1,4 +1,4 @@
-package com.DenJowsenel.avialine.network
+package com.DenJowsenel.avialine.data.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi

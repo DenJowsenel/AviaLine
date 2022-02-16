@@ -1,11 +1,12 @@
-package com.DenJowsenel.avialine
+package com.DenJowsenel.avialine.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.DenJowsenel.avialine.R
 import com.DenJowsenel.avialine.databinding.ActivityMainBinding
-import com.DenJowsenel.avialine.fragments.CompaniesFragment
+import com.DenJowsenel.avialine.presentation.fragments.CompaniesFragment
 
 class MainActivity : FragmentActivity() {
     fun navigateToFragment(fmt: Fragment) {

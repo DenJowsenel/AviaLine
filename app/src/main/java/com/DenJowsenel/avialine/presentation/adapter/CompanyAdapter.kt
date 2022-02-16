@@ -1,4 +1,4 @@
-package com.DenJowsenel.avialine.adapter
+package com.DenJowsenel.avialine.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.DenJowsenel.avialine.R
-import com.DenJowsenel.avialine.model.Company
+import com.DenJowsenel.avialine.domain.model.Company
 import com.bumptech.glide.Glide
 
 typealias OnCompanyClickListener = (Company) -> Unit
